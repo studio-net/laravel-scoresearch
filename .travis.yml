@@ -1,0 +1,19 @@
+language      : php
+php           : [5.6, 7.0, 7.1]
+cache         : [directories : [$COMPOSER_CACHE_DIR, $HOME/.composer/cache, vendor]]
+install       : composer update --no-interaction --prefer-dist
+script        : vendor/bin/phpunit
+notifications :
+    email : false
+
+env :
+    - DATABASE_VERSION=4.2.*
+    - DATABASE_VERSION=5.0.*
+    - DATABASE_VERSION=5.1.*
+    - DATABASE_VERSION=5.2.*
+    - DATABASE_VERSION=5.3.*
+    - DATABASE_VERSION=5.4.*
+
+before_install :
+    - composer global require hirak/prestissimo --update-no-dev
+    - composer require "illuminate/database:${DATABASE_VERSION}" --no-update --prefer-dist
