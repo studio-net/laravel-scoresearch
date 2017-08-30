@@ -93,12 +93,13 @@ trait Searchable {
 	 */
 	protected function getSearchableWeight($key) {
 		$columns = array_get($this->searchable, 'columns', []);
+		$weight  = 1;
 
 		if (array_key_exists($key, $columns)) {
-			return (int) $columns[$key];
+			$weight = $columns[$key];
 		}
 
-		return 1;
+		return $weight;
 	}
 
 	/**
@@ -118,7 +119,10 @@ trait Searchable {
 		foreach ($joins as $table => $keys) {
 			if (is_string($keys)) {
 				$table = $keys;
-				$keys  = [$table . '_id', $this->getTable() . '_id'];
+				$keys  = [
+					sprintf('%s.id', $table, str_singular($table)),
+					sprintf('%s.%s_id', $this->getTable(), str_singular($table))
+				];
 			}
 
 			$query->leftJoin($table, function($join) use ($keys) {
@@ -160,14 +164,15 @@ trait Searchable {
 	 * @return Builder
 	 */
 	protected function applySearchable(Builder $builder, Builder $query, $threshold) {
-		$threshold = (is_null($threshold)) ? array_sum($this->searchable) / 4 : $threshold;
+		$columns   = array_sum(array_get($this->searchable, 'columns', []));
+		$threshold = (is_null($threshold)) ? ceil($columns / 4) : $threshold;
 		$bindings  = array_merge_recursive($query->getBindings(), $builder->getBindings());
 		$from      = $this->getSearchableFrom($query);
 
 		return $builder
 			->from($from)
+			->setBindings($bindings)
 			->where($this->scoreColumn, '>=', $threshold)
-			->orderBy($this->scoreColumn, 'DESC')
-			->setBindings($bindings);
+			->orderBy($this->scoreColumn, 'DESC');
 	}
 }
