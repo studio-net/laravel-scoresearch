@@ -4,8 +4,8 @@ Laravel ScoreSearch package
 Welcome home ! Let me introduce you this package. In fact, this package handles
 two importants things :
 
-- a grammar file
-- a simple trait
+- grammar files (MySQL and PostgreSQL) ;
+- a simple trait ;
 
 ScoreSearch allows you to search thought any of entity that implement the
 provided trait a new way based on scoring to fetch the more relevant rows. At
