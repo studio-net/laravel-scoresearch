@@ -12,6 +12,14 @@ provided trait a new way based on scoring to fetch the more relevant rows. At
 now, I just tested the package over PostgreSQL. Maybe others database engines
 will be implemented if someone need them.
 
+[![Latest Stable Version](https://poser.pugx.org/studio-net/laravel-scoresearch/v/stable)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![Latest Unstable Version](https://poser.pugx.org/studio-net/laravel-scoresearch/v/unstable)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![Total Downloads](https://poser.pugx.org/studio-net/laravel-scoresearch/downloads)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![Monthly Downloads](https://poser.pugx.org/studio-net/laravel-scoresearch/d/monthly)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![Daily Downloads](https://poser.pugx.org/studio-net/laravel-scoresearch/d/daily)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![License](https://poser.pugx.org/studio-net/laravel-scoresearch/license)](https://packagist.org/packages/studio-net/laravel-scoresearch)
+[![Build Status](https://api.travis-ci.org/studio-net/laravel-scoresearch.svg?branch=master)](https://travis-ci.org/studio-net/laravel-scoresearch)
+
 ## Installation
 
 The most basic installation is needed.
