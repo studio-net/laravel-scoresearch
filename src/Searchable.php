@@ -73,7 +73,13 @@ trait Searchable {
 		$grammar = $this->getSearchableGrammar();
 
 		foreach ($search as $key => $value) {
-			$expression = $grammar->getExpression($key, $value);
+			$built = $key;
+
+			if (strpos($key, '.') === false) {
+				$built = sprintf('%s.%s', $this->getTable(), $key);
+			}
+
+			$expression = $grammar->getExpression($built, $value);
 			$bindings   = $expression['bindings'];
 			$weight     = $this->getSearchableWeight($key);
 			$sql        = $grammar->getCase($expression['sql'], $weight);
@@ -165,7 +171,7 @@ trait Searchable {
 	 */
 	protected function applySearchable(Builder $builder, Builder $query, $threshold) {
 		$columns   = array_sum(array_get($this->searchable, 'columns', []));
-		$threshold = (is_null($threshold)) ? ceil($columns / 4) : $threshold;
+		$threshold = (is_null($threshold)) ? ceil($columns / 5) : $threshold;
 		$bindings  = array_merge_recursive($query->getBindings(), $builder->getBindings());
 		$from      = $this->getSearchableFrom($query);
 

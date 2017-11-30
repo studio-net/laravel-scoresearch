@@ -41,14 +41,14 @@ class PostgreSQLGrammarTest extends TestCase {
 		$this->specify('tests basic expression', function() {
 			$expression = $this->grammar->getExpression('username', 'cyril');
 
-			$this->assertSame('username = ?', $expression['sql']);
+			$this->assertSame('username::TEXT = ?', $expression['sql']);
 			$this->assertSame(['cyril'], $expression['bindings']);
 		});
 
 		$this->specify('tests greater than expression', function() {
 			$expression = $this->grammar->getExpression('age', '(gt) 22');
 
-			$this->assertSame('age > ?', $expression['sql']);
+			$this->assertSame('age::TEXT > ?', $expression['sql']);
 			$this->assertSame(['22'], $expression['bindings']);
 		});
 
@@ -58,7 +58,7 @@ class PostgreSQLGrammarTest extends TestCase {
 				'(gt) 30'
 			]);
 
-			$this->assertSame('((age = ?) OR (age = ?)) AND (age > ?)', $expression['sql']);
+			$this->assertSame('((age::TEXT = ?) OR (age::TEXT = ?)) AND (age::TEXT > ?)', $expression['sql']);
 			$this->assertSame(['22', '24', '30'], $expression['bindings']);
 		});
 
@@ -73,7 +73,7 @@ class PostgreSQLGrammarTest extends TestCase {
 				'%o'
 			]);
 
-			$this->assertSame('(((username = ?) OR (username = ?)) OR (username ilike ?)) AND (username ilike ?)', $expression['sql']);
+			$this->assertSame('(((username::TEXT = ?) OR (username::TEXT = ?)) OR (username::TEXT ilike ?)) AND (username::TEXT ilike ?)', $expression['sql']);
 			$this->assertSame(['joe', 'doe', '%logan%', '%o'], $expression['bindings']);
 		});
 	}

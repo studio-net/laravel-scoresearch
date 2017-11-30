@@ -20,6 +20,6 @@ class PostgreSQLGrammar extends Grammar {
 	 * @override
 	 */
 	public function getKey($key) {
-		return $key;
+		return sprintf('%s::TEXT', $key);
 	}
 }
